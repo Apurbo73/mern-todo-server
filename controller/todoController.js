@@ -32,8 +32,8 @@ export const getSingleTodo = async (req, res) => {
 };
 
 export const updateTodo = async (req, res) => {
-  console.log(`You are trying to update todo with id ${req.params.id}`)
-  console.log(req.body.todo)
+  console.log(`You are trying to update todo with id ${req.params.id}`);
+  console.log(req.body.todo);
 
   try {
     const update = await todo.findOneAndUpdate(
@@ -43,9 +43,18 @@ export const updateTodo = async (req, res) => {
 
     await update.save();
     return res.status(200).json(update);
-  } 
-  
-  catch (error) {
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+export const deleteTodo = async (req, res) => {
+  console.log(`You are trying to delete todo with id ${req.params.id}`);
+
+  try {
+    const deleteTodo = await todo.findByIdAndDelete(req.params.id);
+    return res.status(200).json(deleteTodo);
+  } catch (error) {
     return res.status(500).json(error.message);
   }
 };
